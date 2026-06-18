@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚙️ Admin — yocapi_pr</title>
+  <!-- Sin meta description para no indexar -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../../css/dashboard.css" />
+</head>
+<body>
+
+  <!-- ═══ DECORACIONES ═══ -->
+  <div class="capy-deco capy-deco-1" aria-hidden="true">
+    <img src="../../img/capilaptop.png" alt="" />
+  </div>
+  <div class="capy-deco capy-deco-2" aria-hidden="true">
+    <img src="../../img/capicocinando.png" alt="" />
+  </div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="header-logo-wrap">
+          <div class="header-logo-glow"></div>
+          <img src="../../img/capiacostado.png" alt="Logo capybara" class="capy-logo" />
+        </div>
+        <div class="header-text">
+          <h1 class="header-title">Admin Panel</h1>
+          <div class="header-subtitle">
+            <span class="header-streamer">yocapi_pr</span>
+            <span class="header-tagline">⚙️ Gestión de Cumpleaños</span>
+          </div>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <a href="../../index.html" id="nav-calendar">📅 Ver Calendario</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="dash-container">
+
+    <!-- ─── Formulario ─── -->
+    <div class="dash-card">
+      <div class="dash-card-header green">
+        <img src="../../img/capifeliz.png" alt="" class="header-icon" />
+        <h2>Agregar Cumpleaños</h2>
+      </div>
+      <div class="dash-card-body">
+
+        <div class="format-hint">
+          <strong>📋 ¿Cómo funciona?</strong><br>
+          Rellena el formulario y haz clic en <em>"Generar línea"</em>.<br>
+          Copia el resultado y pégalo en <code>data/birthdays.txt</code>.
+        </div>
+
+        <div class="form-group">
+          <label for="inputName">👤 Nombre de usuario</label>
+          <input
+            type="text"
+            id="inputName"
+            placeholder="ej. Daniela"
+            autocomplete="off"
+            maxlength="60"
+            inputmode="text"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>🎂 Fecha de cumpleaños</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="number" id="inputDay" placeholder="Día (ej. 15)" min="1" max="31" style="flex:1;" />
+            <input type="number" id="inputMonth" placeholder="Mes (1-12)" min="1" max="12" style="flex:1;" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputUrl">🔗 URL del perfil</label>
+          <input
+            type="url"
+            id="inputUrl"
+            placeholder="ej. https://twitch.tv/usuario"
+            autocomplete="off"
+            inputmode="url"
+          />
+        </div>
+
+        <button class="btn-add" id="btnGenerate">
+          ✨ Generar línea para birthdays.txt
+        </button>
+
+        <!-- Output generado -->
+        <div class="output-section" id="outputSection" style="display:none">
+          <span class="output-label">📄 Línea generada — cópiala aquí:</span>
+          <div class="output-box" id="outputLine"></div>
+          <button class="btn-copy" id="btnCopy">📋 Copiar al portapapeles</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── Lista actual ─── -->
+    <div class="dash-card">
+      <div class="dash-card-header pink">
+        <img src="../../img/capirey.png" alt="" class="header-icon" />
+        <h2>Registrados</h2>
+        <span class="birthday-count" id="birthdayCount">…</span>
+      </div>
+      <div class="dash-card-body">
+        <div class="birthdays-list" id="birthdaysList">
+          <!-- Dinámico -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../../js/dashboard.js"></script>
+</body>
+</html>
