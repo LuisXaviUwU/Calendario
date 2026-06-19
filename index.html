@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🦫 Cumpleaños de Seguidores — yocapi_pr</title>
+  <meta name="description" content="Calendario de cumpleaños de los seguidores de yocapi_pr. ¡Celebramos contigo cada año!" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <!-- ═══ CAPYBARA DECORACIONES FLOTANTES (JS las rota) ═══ -->
+  <div class="capy-deco capy-deco-1" id="deco1" aria-hidden="true"><img src="img/capiadormilado.png" alt="" /></div>
+  <div class="capy-deco capy-deco-2" id="deco2" aria-hidden="true"><img src="img/capifeliz.png"      alt="" /></div>
+  <div class="capy-deco capy-deco-3" id="deco3" aria-hidden="true"><img src="img/capiuva.png"        alt="" /></div>
+  <div class="capy-deco capy-deco-4" id="deco4" aria-hidden="true"><img src="img/capirey.png"        alt="" /></div>
+  <div class="capy-deco capy-deco-5" id="deco5" aria-hidden="true"><img src="img/capimirando.png"    alt="" /></div>
+  <div class="capy-deco capy-deco-6" id="deco6" aria-hidden="true"><img src="img/capiangel.png"      alt="" /></div>
+
+  <!-- ═══ HEADER DINÁMICO ═══ -->
+  <header class="site-header">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <div class="header-brand">
+        <div class="header-logo-wrap">
+          <div class="header-logo-glow"></div>
+          <img src="img/capiacostado.png" alt="Logo capybara" class="capy-logo" />
+        </div>
+
+        <!-- Textos -->
+        <div class="header-text">
+          <h1 class="header-title">Cumpleaños</h1>
+          <div class="header-subtitle">
+            <span class="header-streamer">yocapi_pr</span>
+            <span class="header-tagline">🌸 Calendario de Seguidores 🌸</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Buscador Rápido -->
+        <div class="search-wrap">
+          <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar seguidor..." autocomplete="off" />
+          <div id="searchResults" class="search-results" style="display: none;"></div>
+        </div>
+
+        <!-- Noche Mode Toggle -->
+        <button id="btnNightMode" class="night-mode-toggle" aria-label="Alternar Modo Noche" title="Modo Noche">
+          🌙
+        </button>
+      </div>
+
+      <!-- Capybaras decorativos en el header -->
+      <div class="header-deco-capy" aria-hidden="true">
+        <img src="img/capimusica.png" alt="" />
+        <img src="img/capiestrella.png" alt="" />
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main-container">
+    <div class="calendar-card">
+
+      <!-- Navegación de mes -->
+      <div class="cal-nav">
+        <button id="btnPrev" aria-label="Mes anterior">&#8592;</button>
+        <div class="month-title">
+          <span id="monthName">Enero</span>
+          <small id="yearName">2025</small>
+        </div>
+        <button id="btnNext" aria-label="Mes siguiente">&#8594;</button>
+      </div>
+
+      <!-- Banner Próximo Cumpleaños -->
+      <div id="nextBdayBanner" class="next-bday-banner" style="display: none;">
+        <span>🔜 Próximo cumpleaños:</span>
+        <strong id="nextBdayText">...</strong>
+      </div>
+
+      <!-- Días de la semana -->
+      <div class="cal-weekdays" aria-hidden="true">
+        <div class="wd">L</div>
+        <div class="wd">M</div>
+        <div class="wd">M</div>
+        <div class="wd">J</div>
+        <div class="wd">V</div>
+        <div class="wd">S</div>
+        <div class="wd">D</div>
+      </div>
+
+      <!-- Grid del mes -->
+      <div class="cal-grid" id="calGrid" role="grid" aria-label="Calendario"></div>
+
+      <!-- Leyenda -->
+      <div class="calendar-legend">
+        <div class="legend-item">
+          <div class="legend-dot pink"></div>
+          <img src="img/capifeliz2.png" alt="" class="legend-capy-icon" />
+          <span>Cumpleaños</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot yellow"></div>
+          <span>Hoy</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ MODAL ═══ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+      <img src="img/capiangel.png" alt="Capybara celebrando" class="modal-capy" id="modalCapyImg" />
+      <h2 class="modal-title" id="modalTitle">¡Cumpleaños!</h2>
+      <span class="modal-date-badge" id="modalDate"></span>
+      <div class="modal-followers" id="modalFollowers"></div>
+    </div>
+  </div>
+
+  <script src="js/calendar.js"></script>
+</body>
+</html>
