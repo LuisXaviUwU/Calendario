@@ -1,0 +1,837 @@
+/* ============================================================
+   main.css — Calendario de Cumpleaños yocapi_pr
+   Rediseño COMPLETO · Tema: Capybara Cozy Premium
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
+
+/* ─── Tokens ─── */
+:root {
+  --bark:      #5D3A1A;
+  --mocha:     #8B5E3C;
+  --caramel:   #C49A6C;
+  --cream:     #FDF5EC;
+  --blush:     #FDDDE6;
+  --rose:      #F4A7B9;
+  --rose-deep: #E8849E;
+  --amber:     #F9A825;
+  --amber-lt:  #FFE08A;
+  --grid-bg:   #E8D0B0;
+  --cell-bg:   #FFFAF6;
+  --shadow:    rgba(93,58,26,0.12);
+  --r-card:    24px;
+  --r-cell:    8px;
+  --transition: 0.18s ease;
+}
+
+/* ─── Tema Oscuro (Modo Noche) ─── */
+body.dark-mode {
+  --bark:      #E4C9B0;
+  --mocha:     #D4AD8C;
+  --caramel:   #A8825C;
+  --cream:     #2B1F1A;
+  --blush:     #3B2228;
+  --rose:      #9B5A6E;
+  --rose-deep: #B56B82;
+  --amber:     #D4891C;
+  --amber-lt:  #E8A038;
+  --grid-bg:   #1A120E;
+  --cell-bg:   #231915;
+  --shadow:    rgba(0,0,0,0.4);
+}
+body.dark-mode {
+  background: linear-gradient(160deg, #1C1310 0%, #2A1D18 30%, #17100D 60%, #1F1511 100%);
+}
+body.dark-mode::before {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+}
+body.dark-mode .site-header {
+  background: linear-gradient(135deg, #1A0D05 0%, #29150B 50%, #3B2114 100%);
+}
+body.dark-mode .cal-nav {
+  background: linear-gradient(135deg, #2B1820 0%, #261611 55%, #2B1A13 100%);
+}
+body.dark-mode .cal-day.empty { background: rgba(0,0,0,0.2); }
+body.dark-mode .cal-day.today { background: linear-gradient(145deg, #3A2B14 0%, #4D391A 100%); }
+body.dark-mode .cal-day.has-birthday { background: linear-gradient(145deg, #331A21 0%, #29151A 100%); }
+body.dark-mode .calendar-legend { background: linear-gradient(135deg, #2B1F1A, #241A15); }
+body.dark-mode .modal-box { background: #2B1F1A; border-color: #4D2834; }
+body.dark-mode .modal-follower-item { background: #231915; border-color: rgba(255,255,255,0.05); }
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(160deg,
+    #F5E6D3 0%,
+    #FAEEE4 30%,
+    #F0E4D8 60%,
+    #EDD9C8 100%
+  );
+}
+
+/* Textura puntitos suaves en el fondo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(196,154,108,0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   CAPYBARA DECORACIONES FLOTANTES
+   ============================================================ */
+.capy-deco {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.capy-deco img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(3px 5px 12px rgba(93,58,26,0.22));
+  transition: opacity 0.7s ease;
+}
+
+.capy-deco-1 { width: 115px; height: 115px; left: 0.5%; animation: float-a 6.5s ease-in-out 0s   infinite; }
+.capy-deco-2 { width:  90px; height:  90px; left: 0.5%; animation: float-b 7.5s ease-in-out 0.5s infinite; }
+.capy-deco-3 { width:  80px; height:  80px; left: 0.5%; animation: float-c 8s   ease-in-out 1s   infinite; }
+.capy-deco-4 { width: 100px; height: 100px; right: 0.5%; animation: float-a 7s   ease-in-out 0.3s infinite; }
+.capy-deco-5 { width:  85px; height:  85px; right: 0.5%; animation: float-b 8.5s ease-in-out 1.2s infinite; }
+.capy-deco-6 { width:  95px; height:  95px; right: 0.5%; animation: float-c 7s   ease-in-out 0.8s infinite; }
+
+@keyframes float-a {
+  0%,100% { transform: translateY(0)    rotate(-4deg) scale(1);    }
+  33%      { transform: translateY(-14px) rotate(2deg) scale(1.04); }
+  66%      { transform: translateY(-6px) rotate(-6deg) scale(0.98); }
+}
+@keyframes float-b {
+  0%,100% { transform: translateY(0)    rotate(5deg)  scale(1);    }
+  50%     { transform: translateY(-18px) rotate(-4deg) scale(1.05); }
+}
+@keyframes float-c {
+  0%,100% { transform: translateY(0)    rotate(-2deg) scale(1);    }
+  40%     { transform: translateY(-10px) rotate(6deg) scale(1.03); }
+  80%     { transform: translateY(-20px) rotate(-3deg) scale(0.97); }
+}
+
+@media (max-width: 700px) {
+  .capy-deco-1 { width: 68px; height: 68px; }
+  .capy-deco-4 { width: 68px; height: 68px; }
+  .capy-deco-2,.capy-deco-3,.capy-deco-5,.capy-deco-6 { display: none; }
+}
+@media (max-width: 480px) { .capy-deco { display: none; } }
+
+/* ============================================================
+   SITE HEADER
+   ============================================================ */
+.site-header {
+  position: relative;
+  z-index: 100;
+  overflow: hidden;
+  background: linear-gradient(135deg,
+    #3E1F0C 0%,
+    #6B3525 20%,
+    #8B5E3C 55%,
+    #A57448 80%,
+    #C49A6C 100%
+  );
+  box-shadow: 0 6px 32px rgba(62,31,12,0.55);
+  flex-shrink: 0;
+}
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg,
+    transparent 25%, rgba(255,255,255,0.06) 50%, transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shine 5s ease-in-out infinite;
+  pointer-events: none;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 18px 18px;
+  pointer-events: none;
+}
+@keyframes shine {
+  0%   { background-position: -100% 0; }
+  50%  { background-position:  100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+.header-logo-wrap { position: relative; flex-shrink: 0; }
+.header-brand .capy-logo {
+  width: 64px; height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px rgba(0,0,0,0.4));
+  animation: logo-bob 3.2s ease-in-out infinite;
+  display: block;
+}
+@keyframes logo-bob {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-7px) rotate(2deg); }
+}
+.header-logo-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,217,102,0.38) 0%, transparent 70%);
+  animation: glow-pulse 3.2s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%,100% { transform: scale(1);   opacity: 0.65; }
+  50%     { transform: scale(1.22); opacity: 1; }
+}
+
+.header-text { min-width: 0; }
+.header-title {
+  font-family: 'Pacifico', cursive;
+  color: #FDF5EC;
+  font-size: clamp(1.15rem, 4.5vw, 2rem);
+  line-height: 1;
+  text-shadow: 2px 4px 14px rgba(0,0,0,0.45);
+}
+.header-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  flex-wrap: wrap;
+}
+.header-streamer {
+  background: linear-gradient(135deg, #FFD966, #FFA030);
+  color: #5D3A1A;
+  font-weight: 900;
+  font-size: clamp(0.6rem, 2vw, 0.82rem);
+  padding: 0.18rem 0.7rem;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 10px rgba(255,160,48,0.45);
+  animation: badge-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes badge-pop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.header-tagline {
+  font-size: clamp(0.58rem, 1.8vw, 0.76rem);
+  color: rgba(253,245,236,0.72);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.header-deco-capy {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  opacity: 0.88;
+}
+.header-deco-capy img {
+  height: 52px; width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+  animation: float-b 5s ease-in-out infinite;
+}
+.header-deco-capy img:nth-child(2) {
+  height: 40px;
+  animation: float-a 6s ease-in-out 0.5s infinite;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 5;
+}
+
+/* ─── Buscador Rápido ─── */
+.search-wrap {
+  position: relative;
+}
+.search-input {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  color: white;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: 180px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+.search-input::placeholder { color: rgba(255,255,255,0.6); }
+.search-input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.8);
+  width: 200px;
+}
+.search-results {
+  position: absolute;
+  top: 110%; right: 0;
+  background: var(--cream);
+  border-radius: 12px;
+  width: 220px;
+  box-shadow: 0 8px 24px rgba(93,58,26,0.3);
+  overflow: hidden;
+  border: 1px solid rgba(196,154,108,0.2);
+  z-index: 100;
+}
+.search-item {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--bark);
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(196,154,108,0.1);
+  transition: background 0.15s ease;
+}
+.search-item:last-child { border-bottom: none; }
+.search-item:hover { background: var(--blush); color: var(--rose-deep); }
+body.dark-mode .search-results { background: var(--cream); border-color: #4D2834; }
+body.dark-mode .search-item:hover { background: #3B2228; color: #E8849E; }
+
+/* Toggle Modo Noche */
+.night-mode-toggle {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  width: 42px; height: 42px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+.night-mode-toggle:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1) rotate(15deg);
+}
+body.dark-mode .night-mode-toggle { content: "☀️"; }
+
+@media (max-width: 600px) {
+  .header-deco-capy { display: none; }
+  .header-inner { padding: 0.7rem 1rem; }
+  .header-brand .capy-logo { width: 50px; height: 50px; }
+}
+
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.8rem;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   CALENDAR CARD — Rediseño premium
+   ============================================================ */
+.calendar-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--cream);
+  border-radius: var(--r-card);
+  box-shadow:
+    0 2px 4px rgba(93,58,26,0.04),
+    0 8px 20px rgba(93,58,26,0.10),
+    0 24px 48px rgba(93,58,26,0.08),
+    0 0 0 1.5px rgba(196,154,108,0.18);
+  overflow: hidden;
+}
+
+/* ─── Nav ─── */
+.cal-nav {
+  background: linear-gradient(135deg, #FEF0F6 0%, #FFF8F2 55%, #FEF0E8 100%);
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+  flex-shrink: 0;
+}
+/* Línea decorativa degradada debajo del nav */
+.cal-nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--rose) 20%, var(--amber) 50%, var(--rose) 80%, transparent 100%
+  );
+  opacity: 0.65;
+}
+
+.cal-nav button {
+  background: white;
+  border: 2px solid var(--rose);
+  color: var(--bark);
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  box-shadow: 0 2px 8px rgba(244,167,185,0.22);
+}
+.cal-nav button:hover, .cal-nav button:active {
+  background: var(--rose);
+  color: white;
+  transform: scale(1.12);
+  box-shadow: 0 4px 14px rgba(244,167,185,0.5);
+}
+
+.cal-nav .month-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.1rem, 4.5vw, 1.65rem);
+  color: var(--bark);
+  text-align: center;
+  flex: 1;
+  letter-spacing: 0.01em;
+  text-shadow: 1px 2px 6px rgba(93,58,26,0.12);
+}
+.cal-nav .month-title small {
+  display: block;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.58rem, 1.6vw, 0.74rem);
+  font-weight: 900;
+  color: var(--caramel);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-top: -2px;
+}
+
+/* ─── Weekday headers ─── */
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: linear-gradient(135deg, var(--bark) 0%, var(--mocha) 100%);
+  flex-shrink: 0;
+}
+.cal-weekdays .wd {
+  text-align: center;
+  padding: 0.42rem 0;
+  font-weight: 900;
+  font-size: clamp(0.55rem, 1.6vw, 0.72rem);
+  color: rgba(253,245,236,0.88);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* ─── Banner Próximo Cumpleaños ─── */
+.next-bday-banner {
+  background: linear-gradient(135deg, var(--rose), var(--mocha));
+  color: white;
+  text-align: center;
+  padding: 0.3rem 0.5rem;
+  font-size: clamp(0.65rem, 2vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  animation: slide-down 0.5s ease-out;
+}
+.next-bday-banner strong { font-weight: 900; color: #FFE08A; }
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Grid ─── */
+.cal-grid {
+  flex: 1;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  background: var(--grid-bg);
+  padding: 3px;
+  min-height: 0;
+}
+
+/* ─── Celdas de días ─── */
+.cal-day {
+  background: var(--cell-bg);
+  border-radius: var(--r-cell);
+  padding: 0.3rem 0.28rem;
+  cursor: default;
+  transition: all var(--transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ─── Celda vacía ─── */
+.cal-day.empty {
+  background: rgba(237,217,192,0.28);
+}
+
+/* ─── Hoy ─── */
+.cal-day.today {
+  background: linear-gradient(145deg, #FFF8DC 0%, #FFE882 100%);
+  box-shadow: inset 0 0 0 1.5px rgba(249,168,37,0.5);
+}
+.cal-day.today::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--amber), #FFA030);
+  border-radius: var(--r-cell) var(--r-cell) 0 0;
+}
+.cal-day.today .day-number {
+  background: linear-gradient(135deg, var(--amber), #F57F17);
+  color: white;
+  font-weight: 900;
+  box-shadow: 0 2px 8px rgba(249,168,37,0.5);
+}
+
+/* ─── Día con cumpleaños ─── */
+.cal-day.has-birthday {
+  background: linear-gradient(145deg, #FEF0F5 0%, #FFFBFD 100%);
+  box-shadow: inset 3px 0 0 0 var(--rose);
+  cursor: pointer;
+}
+.cal-day.has-birthday::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--rose), var(--blush));
+  border-radius: var(--r-cell) var(--r-cell) 0 0;
+}
+.cal-day.has-birthday:hover,
+.cal-day.has-birthday:active {
+  background: linear-gradient(145deg, #FDDDE6 0%, #FEF0F5 100%);
+  transform: scale(1.04);
+  z-index: 5;
+  box-shadow:
+    inset 3px 0 0 0 var(--rose-deep),
+    0 4px 18px rgba(244,167,185,0.4);
+  border-radius: 10px;
+}
+
+/* ─── Número del día ─── */
+.day-number {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-size: clamp(0.55rem, 1.8vw, 0.75rem);
+  color: var(--bark);
+  margin-bottom: 1px;
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+.cal-day:not(.has-birthday):not(.today):not(.empty):hover .day-number {
+  background: rgba(196,154,108,0.18);
+}
+
+/* ─── Badges de cumpleaños ─── */
+.birthday-badge {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 2px;
+}
+.birthday-entry {
+  background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+  color: white;
+  font-size: clamp(0.48rem, 1.3vw, 0.62rem);
+  font-weight: 800;
+  padding: 0px 4px 0px 2px;
+  border-radius: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(232,132,158,0.3);
+}
+/* Pastilla "+N más" */
+.more-entry {
+  background: linear-gradient(135deg, var(--caramel), #A07040) !important;
+  font-size: clamp(0.45rem, 1.2vw, 0.55rem) !important;
+  padding: 0px 5px !important;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 3px rgba(160,112,64,0.3) !important;
+  cursor: pointer;
+}
+.birthday-entry .bi-icon {
+  width: 12px; height: 12px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  padding: 1px;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(62,31,12,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+  padding: 1rem;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-box {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 1.6rem 1.4rem 1.4rem;
+  max-width: 390px;
+  width: 100%;
+  box-shadow:
+    0 4px 8px rgba(93,58,26,0.08),
+    0 20px 60px rgba(93,58,26,0.3);
+  transform: scale(0.82) translateY(24px);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 2px solid var(--blush);
+  position: relative;
+  overflow: hidden;
+}
+.modal-overlay.active .modal-box {
+  transform: scale(1) translateY(0);
+}
+/* Barra superior arcoíris */
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--rose), var(--amber), #7DC9A0, var(--rose));
+  background-size: 200% 100%;
+  animation: rainbow-bar 4s linear infinite;
+}
+@keyframes rainbow-bar {
+  0%   { background-position: 0% 0;    }
+  100% { background-position: 200% 0;  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.85rem; right: 0.85rem;
+  background: var(--blush);
+  border: none;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--bark);
+  font-weight: 900;
+}
+.modal-close:hover {
+  background: var(--rose);
+  color: white;
+  transform: rotate(90deg) scale(1.1);
+}
+.modal-capy {
+  width: 76px; height: 76px;
+  object-fit: contain;
+  display: block;
+  margin: 0.2rem auto 0.7rem;
+  animation: float-b 2.2s ease-in-out infinite;
+}
+.modal-date-badge {
+  background: linear-gradient(135deg, var(--rose), var(--mocha));
+  color: white;
+  font-weight: 900;
+  font-size: 0.9rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: 50px;
+  display: block;
+  margin-bottom: 0.8rem;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(232,132,158,0.3);
+}
+.modal-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.2rem;
+  color: var(--bark);
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+.modal-followers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+.modal-follower-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: white;
+  border-radius: 12px;
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid rgba(196,154,108,0.2);
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 4px rgba(93,58,26,0.06);
+  max-width: 100%;
+  min-width: 0;
+}
+.modal-follower-item:hover {
+  border-color: var(--rose);
+  background: var(--blush);
+  transform: translateX(3px);
+}
+.modal-follower-item .capy-thumb {
+  width: 30px; height: 30px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.modal-follower-link {
+  color: var(--bark);
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  flex: 1;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.modal-follower-link:hover { color: var(--rose-deep); }
+.modal-follower-link::after { content: ' ↗'; font-size: 0.7rem; opacity: 0.5; }
+
+/* ============================================================
+   LEYENDA
+   ============================================================ */
+.calendar-legend {
+  padding: 0.5rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background: linear-gradient(135deg, #FEF8F2, #FAF0E4);
+  border-top: 1.5px solid rgba(196,154,108,0.18);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.legend-item {
+  display: flex; align-items: center;
+  gap: 0.38rem;
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: var(--mocha);
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.legend-dot.pink   { background: linear-gradient(135deg, var(--rose), var(--rose-deep)); }
+.legend-dot.yellow { background: linear-gradient(135deg, var(--amber), #F57F17); }
+.legend-capy-icon  { width: 19px; height: 19px; object-fit: contain; }
+
+/* ============================================================
+   ANIMACIÓN GENÉRICA
+   ============================================================ */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes highlight-pulse {
+  0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(244,167,185,0.7); }
+  50%  { transform: scale(1.06); box-shadow: 0 0 0 10px rgba(244,167,185,0); z-index: 10; border: 2px solid var(--rose); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244,167,185,0); }
+}
+.highlight-pulse {
+  animation: highlight-pulse 2s ease-out;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .header-actions { flex-direction: column; gap: 0.5rem; align-items: flex-end; }
+  .search-input { width: 140px; font-size: 0.7rem; }
+  .search-input:focus { width: 160px; }
+  .cal-day { padding: 0.38rem 0.3rem; }
+  .day-number { width: 20px; height: 20px; font-size: 0.65rem; }
+  .calendar-legend { padding: 0.6rem 1.5rem; gap: 1.5rem; }
+}
+@media (min-width: 900px) {
+  .cal-day { padding: 0.45rem 0.4rem; border-radius: 9px; }
+  .main-container { padding: 0.9rem 1.4rem; }
+}
+@media (max-width: 380px) {
+  .cal-day { padding: 0.18rem 0.15rem; border-radius: 5px; }
+  .day-number { width: 18px; height: 18px; font-size: 0.58rem; }
+  .birthday-entry { font-size: 0.44rem; padding: 0px 3px; }
+  .cal-weekdays .wd { padding: 0.32rem 0; font-size: 0.52rem; }
+  .header-brand .capy-logo { width: 42px; height: 42px; }
+}
