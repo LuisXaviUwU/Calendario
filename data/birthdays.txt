@@ -1,20 +1,26 @@
 # Formato: nombre|MM-DD|url_perfil
 # Ejemplo: Daniela|06-15|https://twitch.tv/daniela
 
-CapiLuisXavi|06-11|https://www.twitch.tv/capiluisxavi
-LaLonjuda|03-18|https://www.twitch.tv/lalonjuda
-YoCapi|06-26|https://www.twitch.tv/yocapi_pr
-DeathFox_122|08-31|https://www.twitch.tv/deathfox_122
+Lalonjuda|03-18|https://www.twitch.tv/lalonjuda
 pedroedu90p|03-18|https://www.twitch.tv/pedroedu90p
 jongm96|05-17|https://www.twitch.tv/jongm96
-jongm96|05-17|https://www.twitch.tv/jongm96
+theevilluisxavi|06-10|https://www.twitch.tv/theevilluisxavi
+luis_xavi_uwu|06-11|https://www.twitch.tv/luis_xavi_uwu
+sabbathzuki13|06-14|https://www.twitch.tv/sabbathzuki13
+alejandrogg94|06-20|https://www.twitch.tv/alejandrogg94
+yocapi_pr|06-26|https://www.twitch.tv/yocapi_pr
 mini_yocapito|07-26|https://www.twitch.tv/mini_yocapito
 elBryanMC325|08-05|https://www.twitch.tv/elBryanMC325
+Itzzbenji15|08-13|https://www.twitch.tv/itzzbenji15
+j_angel_18|08-18|https://www.twitch.tv/j_angel_18
+jorgitooox_|08-23|https://www.twitch.tv/jorgitooox_
 iris_wlt|08-29|https://www.twitch.tv/iris_wlt
-GeometryMay|09-12|https://www.twitch.tv/GeometryMay
+DeathFox_122|08-31|https://www.twitch.tv/deathfox_122
+kyara_s23|09-09|https://www.twitch.tv/kyara_s23
+GeometryMay|09-12|https://www.twitch.tv/geometrymay
 tolmenta_zuki|09-25|https://www.twitch.tv/tolmenta_zuki
 tade_jesus9|11-01|https://www.twitch.tv/tade_jesus9
-BartoSuki|11-14|https://www.twitch.tv/BartoSuki
+BartoSuki|11-14|https://www.twitch.tv/bartosuki
 riobaaichi143442|12-14|https://www.twitch.tv/riobaaichi143442
-Fersanch250|12-25|https://www.twitch.tv/Fersanch250
-sabbathzuki13|06-14|https://www.twitch.tv/sabbathzuki13
+Fersanch250|12-25|https://www.twitch.tv/fersanch250
+joe__grc|12-31|https://www.twitch.tv/joe__grc
